@@ -55,5 +55,4 @@ module.exports = {
   absolute,
   quotient,
   remainder,
-  hello,
 };
