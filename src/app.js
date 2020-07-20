@@ -1,18 +1,14 @@
 const express = require('express');
-const { sayHello } = require('./lib/strings');
-const { uppercase } = require('./lib/strings');
-const { lowercase } = require('./lib/strings');
-const { firstCharacter } = require('./lib/strings');
-const { firstCharacters } = require('./lib/strings');
-const { add } = require('./lib/numbers');
-const { subtract } = require('./lib/numbers');
-const { multiply } = require('./lib/numbers');
-const { divide } = require('./lib/numbers');
-const { remainder } = require('./lib/numbers');
+
+const { sayHello, uppercase, lowercase, firstCharacter, firstCharacters } = require('./lib/strings');
+const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
+const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
 
 const app = express();
 
 app.use(express.json());
+
+// strings
 
 app.get('/strings/hello/:string', (req, res) => {
   res.json({ result: sayHello(req.params.string) });
@@ -31,6 +27,8 @@ app.get('/strings/first-characters/:string', (req, res) => {
   ? res.json({ result: firstCharacters(req.params.string, req.query.length) })
   : res.json({ result: firstCharacter(req.params.string) });
 });
+
+//numbers
 
 app.get('/numbers/add/:a/and/:b', (req, res) => {
   const a =parseInt(req.params.a, 10);
@@ -83,6 +81,33 @@ app.post('/numbers/remainder', (req, res) => {
     res.json({ result: remainder(req.body.a, req.body.b)});
   }
 })
+
+//booleans
+
+app.post('/booleans/negate', (req, res) => {
+  res.json({ result: (negate(req.body.value)) });
+})
+
+app.post('/booleans/truthiness', (req, res) => {
+  res.json({ result: (truthiness(req.body.value)) });
+})
+
+app.get('/booleans/is-odd/:number', (req, res) => {
+  const number = parseInt(req.params.number);
+  if (!number) {
+    res.status(400).json({ error: 'Parameter must be a number.' });
+  }
+  res.json({ result: (isOdd(number)) });
+})
+
+app.get('/booleans/:string/starts-with/:character', (req, res) => {
+  if(req.params.character.length > 1) {
+    res.status(400).json({ error: 'Parameter "character" must be a single character.' })
+  }
+  res.json({ result: (startsWith(req.params.character, req.params.string)) });
+})
+
+
 
 
 
