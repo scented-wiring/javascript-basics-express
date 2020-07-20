@@ -3,6 +3,7 @@ const express = require('express');
 const { sayHello, uppercase, lowercase, firstCharacter, firstCharacters } = require('./lib/strings');
 const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
 const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
+const { getNthElement, arrayToCSVString, addToArray2, elementsStartingWithAVowel, removeNthElement2 } = require('./lib/arrays');
 
 const app = express();
 
@@ -102,13 +103,34 @@ app.get('/booleans/is-odd/:number', (req, res) => {
 
 app.get('/booleans/:string/starts-with/:character', (req, res) => {
   if(req.params.character.length > 1) {
-    res.status(400).json({ error: 'Parameter "character" must be a single character.' })
+    res.status(400).json({ error: 'Parameter "character" must be a single character.' });
   }
   res.json({ result: (startsWith(req.params.character, req.params.string)) });
 })
 
+//arrays
 
+app.post('/arrays/element-at-index/:index', (req, res) => {
+  res.json({ result: getNthElement(req.params.index, req.body.array) });
+})
 
+app.post('/arrays/to-string', (req, res) => {
+  res.json({ result: arrayToCSVString(req.body.array) });
+})
 
+app.post('/arrays/append', (req, res) => {
+  res.json({ result: addToArray2(req.body.value, req.body.array) });
+})
+
+app.post('/arrays/starts-with-vowel', (req, res) => {
+  res.json({ result: elementsStartingWithAVowel(req.body.array) });
+})
+
+app.post('/arrays/remove-element', (req, res) => {
+  if (!req.query.index) {
+    req.query.index = 0;
+  }
+  res.json({ result: removeNthElement2(req.query.index, req.body.array) })
+})
 
 module.exports = app;

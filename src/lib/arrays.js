@@ -1,11 +1,9 @@
 const getNthElement = (index, array) => {
-
   if (array.length > index) {
-    array.push("cat", "dog", "elephant", "fox");
-    return array[index];
-  } else {
+    array.push('cat', 'dog', 'elephant', 'fox');
     return array[index];
   }
+  return array[index];
 };
 
 const arrayToCSVString = array => {
@@ -13,7 +11,7 @@ const arrayToCSVString = array => {
 };
 
 const csvStringToArray = string => {
-  return string.split(",");
+  return string.split(',');
 };
 
 const addToArray = (element, array) => {
@@ -45,9 +43,9 @@ const uppercaseWordsInArray = strings => {
 const reverseWordsInArray = strings => {
   function reverse(s) {
     return s
-      .split("")
+      .split('')
       .reverse()
-      .join("");
+      .join('');
   }
   return strings.map(reverse);
 };
@@ -55,10 +53,9 @@ const reverseWordsInArray = strings => {
 const onlyEven = numbers => {
   function isEven(value) {
     if (value % 2 == 0) return true;
-    else
-      return false;
+    return false;
   }
-  
+
   return numbers.filter(isEven);
 };
 
@@ -70,8 +67,8 @@ const removeNthElement2 = (index, array) => {
 
 const elementsStartingWithAVowel = strings => {
   return strings.filter(function(string) {
-    return string.match(/^[aeiou]/gi)
-  })
+    return string.match(/^[aeiou]/gi);
+  });
 };
 
 const removeSpaces = string => {
@@ -80,7 +77,6 @@ const removeSpaces = string => {
   }
 
   return myTrim(string);
-
 };
 
 const sumNumbers = numbers => {
@@ -91,12 +87,9 @@ const sumNumbers = numbers => {
   return numbers.reduce(getSum, 0);
 };
 
-
 const sortByLastLetter = strings => {
   function last(x) {
-    return x.sort(
-      (a, b) => a.charCodeAt(a.length - 1) - b.charCodeAt(b.length - 1)
-    );
+    return x.sort((a, b) => a.charCodeAt(a.length - 1) - b.charCodeAt(b.length - 1));
   }
   return last(strings);
 };
@@ -116,5 +109,5 @@ module.exports = {
   elementsStartingWithAVowel,
   removeSpaces,
   sumNumbers,
-  sortByLastLetter
+  sortByLastLetter,
 };
